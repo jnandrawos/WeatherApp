@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="weather.image.link">https://openweathermap.org/img/wn/%s.png</string>
+    <string name="weather.image.link2x">https://openweathermap.org/img/wn/%s@2x.png</string>
+</resources>
