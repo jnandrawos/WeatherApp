@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.example.weatherapp.R
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.base.extensions.obtainViewModel
 import com.example.weatherapp.presentation.components.CustomAppDrawerContent
@@ -46,11 +47,8 @@ class MainActivity : ComponentActivity() {
             )
         )
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        val themeStates = listOf(
-            "Auto",
-            "Light",
-            "Dark",
-        )
+        val themeStates: List<String> =
+            resources.getStringArray(R.array.app_theme_themeModes).toList()
         val weatherViewModel: WeatherViewModel by lazy {
             obtainViewModel(
                 this, WeatherViewModel::class.java, defaultViewModelProviderFactory

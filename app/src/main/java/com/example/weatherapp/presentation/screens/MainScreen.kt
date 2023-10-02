@@ -22,6 +22,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.example.weatherapp.R
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.base.extensions.getLastLocation
 import com.example.weatherapp.base.extensions.safe
@@ -37,6 +39,7 @@ import com.example.weatherapp.presentation.viewmodels.WeatherViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(weatherViewModel: WeatherViewModel, updateDrawerState: () -> Unit) {
+    val context = LocalContext.current
     var selectedTabIndex by remember {
         mutableIntStateOf(0)
     }
@@ -77,7 +80,7 @@ fun MainScreen(weatherViewModel: WeatherViewModel, updateDrawerState: () -> Unit
 
     LaunchedEffect(wasDeleted) {
         if (wasDeleted) {
-            WeatherApp.instance.activity.showToast("Data has been deleted successfully")
+            context.showToast(context.getString(R.string.database_display_successText))
         }
     }
 
@@ -88,7 +91,8 @@ fun MainScreen(weatherViewModel: WeatherViewModel, updateDrawerState: () -> Unit
         floatingActionButton = {
             CustomFloatingActionButton {
                 getData()
-            } },
+            }
+        },
         topBar = {
             CustomTopBar(weatherData = weatherData, updateDrawerState = updateDrawerState)
         }

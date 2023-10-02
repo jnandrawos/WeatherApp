@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +30,8 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.weatherapp.R
 import com.example.weatherapp.base.extensions.safe
+import com.example.weatherapp.base.utils.GlobalVars.DATE_FORMAT_WEEK_COMMA_DAY_YEAR
+import com.example.weatherapp.base.utils.GlobalVars.EMPTY_STRING
 import com.example.weatherapp.presentation.models.WeatherResponseModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -60,14 +61,14 @@ fun CurrentWeatherScreen(
 
     )
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         weatherData?.let { weatherResponseModel ->
             Text(
-                text = LocalDate.now().format(DateTimeFormatter.ofPattern("EEEE, dd MMMM")),
+                text = LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern(DATE_FORMAT_WEEK_COMMA_DAY_YEAR)),
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.fillMaxWidth(),
                 lineHeight = 35.sp,
@@ -77,7 +78,11 @@ fun CurrentWeatherScreen(
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "${weatherResponseModel.name.safe()}\n${weatherResponseModel.sysModel?.country.safe()}",
+                text = stringResource(
+                    id = R.string.general_format_lineBreak,
+                    weatherResponseModel.name.safe(),
+                    weatherResponseModel.sysModel?.country.safe()
+                ),
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.fillMaxWidth(),
                 lineHeight = 35.sp,
@@ -92,7 +97,10 @@ fun CurrentWeatherScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Text(
-                    text = if (weatherResponseModel.mainModel?.temp != null) "${weatherResponseModel.mainModel?.temp?.toInt()}C°" else "",
+                    text = if (weatherResponseModel.mainModel?.temp != null) stringResource(
+                        id = R.string.weather_display_temperature,
+                        weatherResponseModel.mainModel?.temp?.toInt().toString()
+                    ) else EMPTY_STRING,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier
                         .weight(1f)
@@ -105,9 +113,7 @@ fun CurrentWeatherScreen(
                 )
                 weatherResponseModel.weatherModel?.let {
                     LottieAnimation(
-                        composition,
-                        progress,
-                        modifier = Modifier.weight(1f)
+                        composition, progress, modifier = Modifier.weight(1f)
                     )
                 }
             }
@@ -119,17 +125,26 @@ fun CurrentWeatherScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Text(
-                    text = if (weatherResponseModel.mainModel?.temp != null) "Min: ${weatherResponseModel.mainModel?.tempMin?.toInt()}C°" else "",
+                    text = if (weatherResponseModel.mainModel?.tempMin != null) stringResource(
+                        id = R.string.weather_display_minTemperature,
+                        weatherResponseModel.mainModel?.tempMin?.toInt().toString()
+                    ) else EMPTY_STRING,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                 )
                 Text(
-                    text = if (weatherResponseModel.mainModel?.temp != null) "Max: ${weatherResponseModel.mainModel?.tempMax?.toInt()}C°" else "",
+                    text = if (weatherResponseModel.mainModel?.tempMax != null) stringResource(
+                        id = R.string.weather_display_maxTemperature,
+                        weatherResponseModel.mainModel?.tempMax?.toInt().toString()
+                    ) else EMPTY_STRING,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                 )
                 Text(
-                    text = if (weatherResponseModel.mainModel?.temp != null) "Humidity: ${weatherResponseModel.mainModel?.humidity?.toInt()}%" else "",
+                    text = if (weatherResponseModel.mainModel?.humidity != null) stringResource(
+                        id = R.string.weather_display_humidity,
+                        weatherResponseModel.mainModel?.humidity.toString()
+                    ) else EMPTY_STRING,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                 )

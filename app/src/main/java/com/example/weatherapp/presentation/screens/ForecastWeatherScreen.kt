@@ -10,9 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weatherapp.R
 import com.example.weatherapp.presentation.components.WeatherForecastColumn
 import com.example.weatherapp.presentation.models.WeatherForecastModel
 
@@ -24,7 +26,7 @@ fun ForecastWeatherScreen(forecastData: WeatherForecastModel? = WeatherForecastM
             .padding(10.dp)
     ) {
         Text(
-            text = "Forecast",
+            text = stringResource(R.string.forecast_display_title),
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 48.sp,
