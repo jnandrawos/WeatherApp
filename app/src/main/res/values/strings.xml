@@ -7,6 +7,7 @@
     <string name="weather.display.maxTemperature">Max: %sC°</string>
     <string name="weather.display.humidity">Humidity: %s\%%</string>
     <string name="forecast.display.title">Forecast</string>
+    <string name="usersData.display.title">Data</string>
     <string name="location.display.errorText">You need to grant full location permissions to access this application\'s content</string>
     <string name="database.display.successText">Data has been deleted successfully</string>
 

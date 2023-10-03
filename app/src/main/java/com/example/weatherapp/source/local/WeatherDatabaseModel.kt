@@ -9,5 +9,8 @@ import java.time.Instant
 data class WeatherDatabaseModel(
     @PrimaryKey(autoGenerate = true) val uid: Int? = null,
     @ColumnInfo(name = "timestamp") val timestamp: Long = Instant.now().epochSecond,
-    @ColumnInfo(name = "weatherJsonModel") val weatherJsonModel: String? = null
+    @ColumnInfo(name = "weatherJsonModel") val weatherJsonModel: String? = null,
+    @ColumnInfo(name = "username") val username: String? = null,
+    @ColumnInfo(name = "picture") val picture: String? = null,
+    @ColumnInfo(name = "nationality") val nationality: String? = null
 )

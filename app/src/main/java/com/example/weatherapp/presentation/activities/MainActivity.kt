@@ -1,6 +1,7 @@
 package com.example.weatherapp.presentation.activities
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.base.extensions.obtainViewModel
+import com.example.weatherapp.base.utils.GlobalVars
 import com.example.weatherapp.presentation.components.CustomAppDrawerContent
 import com.example.weatherapp.presentation.models.ThemeEnum
 import com.example.weatherapp.presentation.screens.ErrorScreen
@@ -74,6 +76,17 @@ class MainActivity : ComponentActivity() {
                             themeModeState = it
                         }, deleteDataListener = {
                             weatherViewModel.deleteAllData()
+                        }, checkDataListener = {
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    UsersDataActivity::class.java
+                                ).apply {
+                                    putExtra(
+                                        GlobalVars.THEME_BUNDLE, themeModeState.name
+                                    )
+                                })
+                            coroutineScope.launch { drawerState.close() }
                         })
                     }) {
                         MainScreen(weatherViewModel = weatherViewModel) {

@@ -18,6 +18,7 @@ android {
         versionName = "1.0"
         buildConfigField("String", "API_KEY", "\"c59472c078c8a4038731e08b11c9d0c0\"")
         buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/data/2.5/\"")
+        buildConfigField("String", "PROFILE_BASE_URL", "\"https://randomuser.me/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

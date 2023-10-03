@@ -20,6 +20,11 @@ class WeatherRepository @Inject constructor(private val weatherDao: WeatherDao) 
         emit(weatherEntry)
     }.flowOn(Dispatchers.IO)
 
+    fun getWeatherEntries(): Flow<ArrayList<WeatherDatabaseModel>?> = flow {
+        val weatherEntry = weatherDao.getWeatherEntries()
+        emit(weatherEntry as ArrayList)
+    }.flowOn(Dispatchers.IO)
+
     fun deleteAllData() = flow {
         weatherDao.deleteAllData()
         emit(true)

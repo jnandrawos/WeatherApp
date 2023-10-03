@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.weatherapp.source.local.WeatherDao
 import com.example.weatherapp.source.local.WeatherDatabase
+import com.example.weatherapp.source.local.WeatherDatabaseMigrations.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,6 +29,7 @@ class DatabaseModule {
             WeatherDatabase::class.java,
             "weather db"
         )
+            .addMigrations(MIGRATION_1_2)
             .fallbackToDestructiveMigration()
             .build()
 }

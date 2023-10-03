@@ -23,7 +23,8 @@ import com.example.weatherapp.source.local.WeatherDatabase
 @Composable
 fun CustomAppDrawerContent(
     themeToggleListener: ((ThemeEnum) -> Unit)?,
-    deleteDataListener: (() -> Unit)?
+    deleteDataListener: (() -> Unit)?,
+    checkDataListener: (() -> Unit)?,
 ) {
     Column(
         modifier = Modifier
@@ -76,5 +77,22 @@ fun CustomAppDrawerContent(
             fontSize = 16.sp,
             textAlign = TextAlign.Start
         )
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(
+            onClick = {
+                checkDataListener?.invoke()
+            }, colors = ButtonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary.copy(
+                    alpha = 0.5f
+                ),
+                disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(
+                    alpha = 0.5f
+                ),
+            )
+        ) {
+            Text(text = "Check Database Data")
+        }
     }
 }

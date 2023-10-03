@@ -5,6 +5,8 @@ import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.base.interceptors.ApiKeyInterceptor
 import com.example.weatherapp.base.models.APIResponse
 import com.example.weatherapp.base.models.ErrorDataModel
+import com.example.weatherapp.base.qualifiers.Profile
+import com.example.weatherapp.source.remote.api.ProfileApi
 import com.example.weatherapp.source.remote.api.WeatherApi
 import com.google.gson.Gson
 import dagger.Module
@@ -59,6 +61,29 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
 
+
+    @Provides
+    @Profile
+    @Singleton
+    fun providesProfileOkHttpClient() =
+        OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS).addInterceptor(loggingInterceptor)
+            .build()
+
+    @Singleton
+    @Provides
+    @Profile
+    fun getProfileRetrofit(
+        gson: Gson,
+        @Profile okHttpClient: OkHttpClient
+    ): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.PROFILE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+
     suspend fun <T> getResponse(
         request: suspend () -> Response<T>
     ): APIResponse<T> {
@@ -90,6 +115,13 @@ class NetworkModule {
     @Singleton
     fun provideWeatherApi(retrofit: Retrofit): WeatherApi {
         return retrofit.create(WeatherApi::class.java)
+    }
+
+    @Profile
+    @Provides
+    @Singleton
+    fun provideProfileApi(@Profile retrofit: Retrofit): ProfileApi {
+        return retrofit.create(ProfileApi::class.java)
     }
 
 }
