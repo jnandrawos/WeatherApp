@@ -16,12 +16,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TriStateToggle(states: List<String>, onSelectionChange: ((Int) -> Unit)) {
+inline fun <reified T : Enum<T>> MultiStateToggle(crossinline onSelectionChange: ((T) -> Unit)) {
+    val states = enumValues<T>()
     var selectedOption by remember {
-        mutableStateOf(states[0])
+        mutableStateOf(states.first())
     }
 
     Surface(
@@ -36,18 +39,18 @@ fun TriStateToggle(states: List<String>, onSelectionChange: ((Int) -> Unit)) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
         ) {
-            states.forEachIndexed { index, text ->
+            states.forEach { enumValue ->
                 Text(
-                    text = text,
+                    text = enumValue.name.lowercase().capitalize(Locale.current),
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(24.dp))
                         .clickable {
-                            onSelectionChange.invoke(index)
-                            selectedOption = states[index]
+                            onSelectionChange.invoke(enumValue)
+                            selectedOption = enumValue
                         }
                         .background(
-                            if (text == selectedOption) {
+                            if (enumValue == selectedOption) {
                                 MaterialTheme.colorScheme.primary
                             } else {
                                 MaterialTheme.colorScheme.onSurfaceVariant

@@ -15,10 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.example.weatherapp.R
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.base.extensions.obtainViewModel
 import com.example.weatherapp.presentation.components.CustomAppDrawerContent
+import com.example.weatherapp.presentation.models.ThemeEnum
 import com.example.weatherapp.presentation.screens.ErrorScreen
 import com.example.weatherapp.presentation.screens.MainScreen
 import com.example.weatherapp.presentation.viewmodels.WeatherViewModel
@@ -47,8 +47,6 @@ class MainActivity : ComponentActivity() {
             )
         )
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        val themeStates: List<String> =
-            resources.getStringArray(R.array.app_theme_themeModes).toList()
         val weatherViewModel: WeatherViewModel by lazy {
             obtainViewModel(
                 this, WeatherViewModel::class.java, defaultViewModelProviderFactory
@@ -59,21 +57,21 @@ class MainActivity : ComponentActivity() {
                 rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
             val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             var themeModeState by remember {
-                mutableStateOf(themeStates[0])
+                mutableStateOf(ThemeEnum.AUTO)
             }
             val coroutineScope = rememberCoroutineScope()
 
             WeatherAppTheme(
                 darkTheme = when (themeModeState) {
-                    themeStates[1] -> false
-                    themeStates[2] -> true
+                    ThemeEnum.LIGHT -> false
+                    ThemeEnum.DARK -> true
                     else -> isSystemInDarkTheme()
                 }
             ) {
                 if (permissionState.hasPermission) {
                     ModalNavigationDrawer(drawerState = drawerState, drawerContent = {
-                        CustomAppDrawerContent(themeStates = themeStates, themeToggleListener = {
-                            themeModeState = themeStates[it]
+                        CustomAppDrawerContent(themeToggleListener = {
+                            themeModeState = it
                         }, deleteDataListener = {
                             weatherViewModel.deleteAllData()
                         })

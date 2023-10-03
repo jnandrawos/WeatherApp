@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weatherapp.presentation.models.ThemeEnum
 import com.example.weatherapp.source.local.WeatherDatabase
 
 @Composable
 fun CustomAppDrawerContent(
-    themeStates: List<String>,
-    themeToggleListener: ((Int) -> Unit)?,
+    themeToggleListener: ((ThemeEnum) -> Unit)?,
     deleteDataListener: (() -> Unit)?
 ) {
     Column(
@@ -40,7 +40,7 @@ fun CustomAppDrawerContent(
             textAlign = TextAlign.Start
         )
         Spacer(modifier = Modifier.height(10.dp))
-        TriStateToggle(states = themeStates) {
+        MultiStateToggle<ThemeEnum> {
             themeToggleListener?.invoke(it)
         }
         Spacer(modifier = Modifier.height(10.dp))
