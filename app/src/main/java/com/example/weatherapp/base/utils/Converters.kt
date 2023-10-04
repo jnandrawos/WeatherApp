@@ -1,5 +1,6 @@
 package com.example.weatherapp.base.utils
 
+import com.example.weatherapp.presentation.models.WeatherForecastModel
 import com.example.weatherapp.presentation.models.WeatherResponseModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,6 +19,13 @@ object Converters {
         val gson = Gson()
         return gson.fromJson(
             result, object : TypeToken<WeatherResponseModel>() {}.type
+        )
+    }
+
+    fun getForecastJson(result: String): WeatherForecastModel {
+        val gson = Gson()
+        return gson.fromJson(
+            result, object : TypeToken<WeatherForecastModel>() {}.type
         )
     }
 
