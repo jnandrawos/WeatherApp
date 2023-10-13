@@ -13,8 +13,8 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.base.extensions.obtainViewModel
@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
             val permissionState =
                 rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
             val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-            var themeModeState by remember {
+            var themeModeState by rememberSaveable {
                 mutableStateOf(ThemeEnum.AUTO)
             }
             val coroutineScope = rememberCoroutineScope()

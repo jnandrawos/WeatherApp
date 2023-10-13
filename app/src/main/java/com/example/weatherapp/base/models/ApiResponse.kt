@@ -8,17 +8,13 @@ data class APIResponse<out T>(
 
 
     companion object {
-        fun <T> success(data: T?): APIResponse<T> {
-            return APIResponse(Status.SUCCESS, data, exception = null, message = null)
-        }
+        fun <T> success(data: T?): APIResponse<T> =
+            APIResponse(Status.SUCCESS, data, exception = null, message = null)
 
-        fun <T> error(message: String, error: Exception?): APIResponse<T> {
-            return APIResponse(Status.ERROR, null, exception = error, message = message)
-        }
+        fun <T> error(message: String, error: Exception?): APIResponse<T> =
+            APIResponse(Status.ERROR, null, exception = error, message = message)
 
-        fun <T> loading(): APIResponse<T> {
-            return APIResponse(Status.LOADING, null, null, null)
-        }
+        fun <T> loading(): APIResponse<T> = APIResponse(Status.LOADING, null, null, null)
     }
 }
 

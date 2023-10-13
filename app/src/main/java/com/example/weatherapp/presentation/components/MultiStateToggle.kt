@@ -28,13 +28,13 @@ inline fun <reified T : Enum<T>> MultiStateToggle(crossinline onSelectionChange:
     }
 
     Surface(
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .wrapContentSize()
     ) {
         Row(
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(24.dp))
+                .clip(shape = RoundedCornerShape(10.dp))
                 .background(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -44,7 +44,7 @@ inline fun <reified T : Enum<T>> MultiStateToggle(crossinline onSelectionChange:
                     text = enumValue.name.lowercase().capitalize(Locale.current),
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     modifier = Modifier
-                        .clip(shape = RoundedCornerShape(24.dp))
+                        .clip(shape = RoundedCornerShape(10.dp))
                         .clickable {
                             onSelectionChange.invoke(enumValue)
                             selectedOption = enumValue

@@ -22,7 +22,7 @@ import com.example.weatherapp.presentation.models.WeatherByDayModel
 @Composable
 fun WeatherForecastColumn(modifier: Modifier, data: List<WeatherByDayModel>) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
     ) {
         data.forEach { day ->
             stickyHeader {
